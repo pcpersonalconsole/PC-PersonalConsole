@@ -60,7 +60,7 @@ Close the application — the Windows desktop and taskbar are restored on exit �
 **Settings → Apps**, or delete the folder if you used the portable ZIP. If you enabled "Launch on
 Startup", turn it off first so the scheduled task is removed.
 
-**Uninstalling never deletes your settings.** See below for where they are.
+**Uninstalling doesn't deletes your settings.**
 
 ## First run
 
