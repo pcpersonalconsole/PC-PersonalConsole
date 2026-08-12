@@ -139,4 +139,4 @@ remain in full force. Failure to enforce any provision is not a waiver of it. Th
 agreement is the entire agreement between you and the author concerning the Software.
 
 
-Contact: https://www.patreon.com/cw/personalconsoledev
+Contact: https://pcpersonalconsole.vercel.app
