@@ -13,39 +13,11 @@ PersonalConsole replaces the Windows desktop with a full-screen, controller-firs
 a tile desktop with tabs, an on-screen keyboard with word prediction, radial menus, a file browser and
 a system panel — all navigable without ever reaching for a mouse.
 
+Official website: https://www.patreon.com/cw/personalconsoledev/membership
+
 > Download: **[Releases](../../releases)**
 
----
 
-## Screenshots
-
-<!-- Add images here. Suggested: console desktop, radial menu, virtual keyboard, mapping page. -->
-| Console desktop | Radial menu |
-|---|---|
-| _screenshot_ | _screenshot_ |
-
----
-
-## What it does
-
-- **Console desktop** — full-screen tile launcher with tabs, custom ordering, hidden items, a clock and
-  a power menu. Replaces the Windows desktop while it is running and hands it back when it closes.
-- **Controller mapping engine** — per-application profiles. Any button can send keys, mouse actions,
-  shortcuts or macros, with tap / double-tap / hold / release slots and eight switchable layouts.
-- **Analog control** — either stick can drive the mouse pointer or synthesise directional keys, with
-  adjustable dead zone, sensitivity and acceleration.
-- **On-screen keyboard** — two modes: one types straight into the focused application, one buffers the
-  text and delivers it when you are done. Word prediction and next-word suggestions, with dictionaries
-  that learn as you type. Multiple languages included, and you can add your own.
-- **Radial menus** — wheel or hotbar, bound to any button, with per-item colours and symbols and
-  nested submenus.
-- **File browser and system panel** — a controller-navigable file manager, and a system page for
-  display, storage, running applications and installed programs.
-- **Password field support** — credentials are stored encrypted with Windows DPAPI and never leave the
-  machine they were entered on.
-- **Themes** — several built in, plus a custom theme editor.
-
----
 
 ## Requirements
 
@@ -90,37 +62,6 @@ Startup", turn it off first so the scheduled task is removed.
 
 **Uninstalling never deletes your settings.** See below for where they are.
 
----
-
-## Where your data lives
-
-Everything the application saves is kept in one place, split by whether it can be carried to another
-computer:
-
-```
-Documents\PersonalConsole\
-├── Shared\            everything you can copy to another PC:
-│                      profiles, themes, keyboard settings, layouts, dictionaries, templates
-├── <YOUR-PC-NAME>\    everything tied to this PC:
-│                      desktop layout, tabs, pinned folders, recent applications
-└── Logs\              diagnostic logs (kept for 7 days)
-```
-
-- **Uninstalling leaves this folder untouched.** Reinstalling picks it up again, and so does an update —
-  updates replace only the program itself.
-- **Moving to a new computer:** copy the `Shared` folder across — that is exactly what it is for. Your
-  profiles, themes, keyboard settings and layouts come with it. The folder named after your PC is
-  deliberately left behind, because the desktop layout it holds describes the shortcuts installed on
-  that particular machine and would be wrong on another one.
-- **Saved passwords are the one exception.** They are stored in
-  `%LOCALAPPDATA%\PersonalConsole` instead, encrypted and tied to your Windows account on that
-  computer. They are deliberately kept out of Documents so they are never uploaded to a cloud folder,
-  and they cannot be decrypted on another machine even if copied. Enter them again on the new computer.
-- **Starting over:** close the application and delete `Documents\PersonalConsole`. It is recreated with
-  defaults on the next launch.
-
----
-
 ## First run
 
 1. Connect a controller before launching, so it is detected at startup.
@@ -143,13 +84,6 @@ and opens this page when a newer one exists. The check runs only when that butto
 ---
 
 ## Known limitations
-
-- **No force feedback on DInput pads.** For this class of controller Windows reports no haptics and no
-  force-feedback motors on the raw path; every writable output report the device declares was tried and
-  none moved a motor. A pad running in XInput mode rumbles normally.
-- **Extra paddles (L4/R4) cannot be bound.** Controllers with rear paddles copy them onto an existing
-  button in their own firmware, so nothing distinguishable ever reaches the driver. Map the paddle to a
-  spare button in your controller's own software, then bind that button here.
 - **One controller drives the interface.** Additional pads can run their own profiles, but menu
   navigation belongs to the first one.
 
@@ -173,12 +107,3 @@ redistributed, modified or reverse engineered. It is provided with no warranty o
 
 See [LICENSE.txt](LICENSE.txt) for the full terms, which also describe what the application does to
 your system — it runs elevated and replaces the Windows shell while its console desktop is enabled.
-
----
-
-## A note on SmartScreen
-
-The downloads are not signed with a code-signing certificate, so Windows SmartScreen will warn that
-the publisher is unknown the first time you run the installer. Choose **More info → Run anyway** if
-you are happy to proceed. A signing certificate is a recurring cost and has not been bought for this
-project.
