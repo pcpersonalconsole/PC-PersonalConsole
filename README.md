@@ -13,7 +13,7 @@ PersonalConsole replaces the Windows desktop with a full-screen, controller-firs
 a tile desktop with tabs, an on-screen keyboard with word prediction, radial menus, a file browser and
 a system panel — all navigable without ever reaching for a mouse.
 
-Official website: https://pcpersonalconsole.vercel.app
+> [Official website](https://pcpersonalconsole.vercel.app)
 
 > Download: **[Releases](../../releases)**
 
