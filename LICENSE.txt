@@ -1,0 +1,142 @@
+PersonalConsole
+End User Licence Agreement
+
+Copyright (c) 2026 pcpersonalconsole. All rights reserved.
+
+PLEASE READ THIS AGREEMENT BEFORE INSTALLING OR USING THE SOFTWARE. By installing,
+copying, or using PersonalConsole ("the Software"), you agree to be bound by the
+terms below. If you do not agree, do not install or use the Software.
+
+
+1. LICENCE GRANTED
+
+The Software is licensed, not sold. Subject to the terms of this agreement, you are
+granted a personal, non-exclusive, non-transferable, revocable licence to install
+and use the Software on computers that you own or control, for personal,
+non-commercial purposes, free of charge.
+
+
+2. WHAT YOU MAY NOT DO
+
+You may not:
+
+  a) sell, rent, lease, sublicense, or otherwise charge any fee for the Software or
+     for access to it;
+  b) distribute, publish, upload, or otherwise make the Software available to
+     others, in whole or in part, whether modified or unmodified;
+  c) modify, adapt, translate, or create derivative works of the Software;
+  d) reverse engineer, decompile, disassemble, or otherwise attempt to derive the
+     source code of the Software, except to the extent that applicable law
+     expressly permits this despite this limitation;
+  e) remove, obscure, or alter any copyright, trademark, or other proprietary
+     notice contained in the Software;
+  f) use the Software in any way that breaks applicable law.
+
+The Software's source code is not published and is not part of this licence. No
+rights to the source code are granted.
+
+
+3. WHAT THE SOFTWARE DOES TO YOUR SYSTEM
+
+You should understand the following before installing. These are intended
+behaviours, not defects:
+
+  a) ADMINISTRATOR PRIVILEGES. The Software requests elevation and runs with
+     administrator rights. It requires this in order to send simulated keyboard and
+     mouse input to other applications, which Windows otherwise discards.
+
+  b) SHELL REPLACEMENT. While its console desktop is enabled, the Software hides the
+     Windows desktop icons and the taskbar and presents its own interface in their
+     place. It restores them when it exits. If the Software is terminated abnormally
+     — for example by ending the process — the Windows desktop and taskbar may need
+     to be restored by signing out and back in, or by restarting Windows Explorer.
+
+  c) SIMULATED INPUT. The Software generates keyboard and mouse input on your behalf
+     according to the profiles you configure. You are responsible for the
+     configurations you create and for their effects.
+
+  d) OPTIONAL VIRTUAL CONTROLLER. If you enable it, the Software can present a
+     virtual game controller to Windows. This requires a separate third-party driver
+     which is not part of the Software and is covered by its own licence.
+
+  e) STARTUP TASK. If you enable "Launch on Startup", the Software registers a
+     Windows scheduled task. Disabling the option removes it.
+
+
+4. YOUR DATA
+
+The Software stores its settings, profiles, themes, dictionaries, desktop layout and
+diagnostic logs in a single folder inside your Documents folder. Removing the
+Software does not delete that folder; your configuration is left in place and is
+picked up again if you reinstall.
+
+Saved credentials, if you use that feature, are held separately in your local
+application data folder rather than with the rest of your settings, so that they are
+never copied to a synchronised or cloud folder. They are encrypted with the Windows
+Data Protection API and bound to your Windows user account on that computer; they
+cannot be read on another machine and are not transmitted anywhere.
+
+The Software does not collect analytics and does not transmit your data. The only
+network request it makes is the update check, which contacts GitHub only when you
+press the button that performs it.
+
+
+5. DONATIONS
+
+Any contribution you choose to make is voluntary and is a gift in support of
+continued development. It is not a purchase, does not create a contract of sale, and
+does not entitle you to any feature, service, support, warranty, or refund.
+
+
+6. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH YOU.
+
+No advice or information, whether oral or written, obtained from the author creates
+any warranty not expressly stated here.
+
+
+7. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHOR SHALL NOT BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES,
+INCLUDING BUT NOT LIMITED TO LOSS OF DATA, LOSS OF PROFITS, BUSINESS INTERRUPTION,
+OR SYSTEM MISCONFIGURATION, ARISING OUT OF OR IN CONNECTION WITH THE SOFTWARE OR ITS
+USE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Because the Software is provided free of charge, the author's total aggregate
+liability under this agreement shall not exceed zero.
+
+Some jurisdictions do not allow the exclusion of certain warranties or the
+limitation of certain liabilities. Where that is the case, the exclusions and
+limitations above apply only to the extent permitted, and nothing in this agreement
+limits liability for death or personal injury caused by negligence, for fraud, or
+for anything else that cannot lawfully be limited.
+
+
+8. TERM AND TERMINATION
+
+This licence takes effect when you first install or use the Software and continues
+until terminated. It terminates automatically if you breach any of its terms. On
+termination you must stop using the Software and remove all copies of it. Sections 2
+and 6 through 10 survive termination.
+
+
+9. CHANGES
+
+The author may change these terms for future versions of the Software. Continuing to
+use a version you have already installed remains governed by the terms that
+accompanied it.
+
+
+10. GENERAL
+
+If any provision of this agreement is held unenforceable, the remaining provisions
+remain in full force. Failure to enforce any provision is not a waiver of it. This
+agreement is the entire agreement between you and the author concerning the Software.
+
+
+Contact: https://www.patreon.com/cw/personalconsoledev
