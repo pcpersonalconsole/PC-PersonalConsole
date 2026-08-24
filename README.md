@@ -1,10 +1,3 @@
-<!--
-  This is the README for the PUBLIC, RELEASES-ONLY repository - not for this one.
-  It lives here so it is versioned and easy to find; copy its contents into the new repository.
-  ⛔ It deliberately describes no source layout, no file paths and no internals: that repository
-     carries releases only, and the source stays private.
--->
-
 # PersonalConsole
 
 A Windows shell replacement you drive with a game controller.
@@ -13,28 +6,72 @@ PersonalConsole replaces the Windows desktop with a full-screen, controller-firs
 a tile desktop with tabs, an on-screen keyboard with word prediction, radial menus, a file browser and
 a system panel — all navigable without ever reaching for a mouse.
 
-> [Official website](https://pcpersonalconsole.vercel.app)
-
 > Download: **[Releases](../../releases)**
 
+---
 
+## Screenshots
+
+<!-- Add images here. Suggested: console desktop, radial menu, virtual keyboard, mapping page. -->
+| Console desktop | Radial menu |
+|---|---|
+| _screenshot_ | _screenshot_ |
+
+---
+
+## What it does
+
+- **Console desktop** — full-screen tile launcher with tabs, custom ordering, hidden items, a clock and
+  a power menu. Replaces the Windows desktop while it is running and hands it back when it closes.
+- **Controller mapping engine** — per-application profiles. Any button can send keys, mouse actions,
+  shortcuts or macros, with tap / double-tap / hold / release slots and eight switchable layouts. One
+  slot can hold several of these at once — a key and a mouse button go out together on one press.
+- **Analog control** — either stick can drive the mouse pointer or synthesise directional keys, with
+  adjustable dead zone, sensitivity and acceleration.
+- **On-screen keyboard** — two of them. *Realtime* types straight into the focused application;
+  *Buffer* collects the text and delivers it when you close the keyboard. Word prediction and
+  next-word suggestions, with dictionaries that learn as you type. Multiple languages included, and
+  you can add your own.
+- **Radial menus** — wheel or hotbar, bound to any button, with per-item colours and symbols and
+  nested submenus.
+- **File browser and system panel** — a controller-navigable file manager, and a system page for
+  display, storage, running applications and installed programs.
+- **Password field support** — credentials are stored encrypted with Windows DPAPI and never leave the
+  machine they were entered on.
+- **Themes** — several built in, plus a custom theme editor.
+
+---
 
 ## Requirements
 
 | | |
 |---|---|
 | **OS** | Windows 10 version 2004 (build 19041) or newer, 64-bit |
-| **Privileges** | **Administrator.** The application requests elevation on launch and will not work without it |
-| **Controller** | Any XInput controller (Xbox and compatible pads) |
+| **Privileges** | **Administrator.** Windows asks for your permission at every launch, and the application will not start without it |
+| **Controller** | See the table below — Xbox and compatible pads work as they are |
 
-**About administrator rights:** Windows silently discards synthetic input sent to an elevated window
-from a non-elevated process. Since the whole point is to drive other applications with a controller,
-the application has to run elevated or its input would vanish over any elevated window.
+### Which controllers work
 
-**Controllers in DInput mode:** a pad switched to DInput is invisible to XInput. PersonalConsole reads
-such a pad directly and treats it like any other, but note that force feedback is not available on that
-path. PlayStation and Switch controllers are not exposed to XInput by Windows at all; use a bridge such
-as DS4Windows or Steam Input, which presents them as a virtual Xbox pad.
+| Controller | Works | What you need to do |
+|---|---|---|
+| **Xbox** (360, One, Series) and any pad that presents itself as one | **Yes** | Nothing. Plug it in. |
+| **Third-party pads with an XInput mode** — 8BitDo, GameSir, PowerA, Nacon and similar | **Yes** | Put the pad in XInput mode, usually a switch on the device or a button combination at power-on. |
+| **The same pads in DInput mode** | **Yes** | Nothing — the application reads them directly. Rumble is not available on this path, and rear paddles cannot be told apart from the buttons they copy. |
+| **PlayStation** (DualShock 4, DualSense) | **Through a bridge** | Windows does not expose these to XInput at all. Install DS4Windows or use Steam Input, which presents the pad as a virtual Xbox controller; the application then sees an Xbox pad. |
+| **Nintendo Switch Pro / Joy-Con** | **Through a bridge** | Same as above. |
+| **Generic USB gamepads** | **Usually** | If Windows lists it under *Set up USB game controllers*, the application can read it on the DInput path. Layout quality varies by device. |
+
+📌 **One controller drives the menus.** Extra pads can run their own profiles at the same time, but
+interface navigation belongs to the first one.
+
+**About administrator rights:** Windows silently discards simulated input sent from an ordinary
+program into a window that belongs to a program running as administrator. Since the whole point is to
+drive other applications with a controller, this one has to run as administrator — otherwise its input
+would vanish over any such window, with no error to explain why.
+
+**Why DInput is a separate path:** a pad switched to DInput is invisible to XInput, so the application
+reads it straight from the device instead. It then behaves like any other controller — the differences
+are listed in the table above.
 
 ---
 
@@ -43,14 +80,14 @@ as DS4Windows or Steam Input, which presents them as a virtual Xbox pad.
 **Installer (recommended)**
 
 1. Download `PersonalConsole-Setup-vX.Y.Z.exe` from the [Releases](../../releases) page.
-2. Run it and accept the elevation prompt. The wizard shows the licence, lets you choose the install
+2. Run it and accept the Windows permission prompt. The wizard shows the licence, lets you choose the install
    folder, and asks whether you want a desktop shortcut.
 
 **Portable ZIP**
 
 1. Download `PersonalConsole-vX.Y.Z-win-x64.zip`.
 2. Extract it to a folder you control. Do not run it from inside the ZIP.
-3. Run `PersonalConsole.exe` and accept the elevation prompt.
+3. Run `PersonalConsole.exe` and accept the Windows permission prompt.
 
 Either way, settings are stored in your Documents folder under `PersonalConsole` — see below.
 
@@ -60,7 +97,38 @@ Close the application — the Windows desktop and taskbar are restored on exit �
 **Settings → Apps**, or delete the folder if you used the portable ZIP. If you enabled "Launch on
 Startup", turn it off first so the scheduled task is removed.
 
-**Uninstalling doesn't deletes your settings.**
+**Uninstalling never deletes your settings.** See below for where they are.
+
+---
+
+## Where your data lives
+
+Everything the application saves is kept in one place, split by whether it can be carried to another
+computer:
+
+```
+Documents\PersonalConsole\
+├── Shared\            everything you can copy to another PC:
+│                      profiles, themes, keyboard settings, layouts, dictionaries, templates
+├── <YOUR-PC-NAME>\    everything tied to this PC:
+│                      desktop layout, tabs, pinned folders, recent applications
+└── Logs\              diagnostic logs (kept for 7 days)
+```
+
+- **Uninstalling leaves this folder untouched.** Reinstalling picks it up again, and so does an update —
+  updates replace only the program itself.
+- **Moving to a new computer:** copy the `Shared` folder across — that is exactly what it is for. Your
+  profiles, themes, keyboard settings and layouts come with it. The folder named after your PC is
+  deliberately left behind, because the desktop layout it holds describes the shortcuts installed on
+  that particular machine and would be wrong on another one.
+- **Saved passwords are the one exception.** They are stored in
+  `%LOCALAPPDATA%\PersonalConsole` instead, encrypted and tied to your Windows account on that
+  computer. They are deliberately kept out of Documents so they are never uploaded to a cloud folder,
+  and they cannot be decrypted on another machine even if copied. Enter them again on the new computer.
+- **Starting over:** close the application and delete `Documents\PersonalConsole`. It is recreated with
+  defaults on the next launch.
+
+---
 
 ## First run
 
@@ -74,18 +142,74 @@ Settings, profiles and themes live in `Documents\PersonalConsole`. Copying that 
 machine carries your setup with it, with the exception of saved passwords, which are encrypted to the
 machine that stored them and cannot be transferred.
 
+### What a fresh install starts with
+
+Nothing here is hidden, so you can decide what to change before you change anything.
+
+| Setting | Default | Why |
+|---|---|---|
+| **Console desktop** | **Off** | It replaces your desktop. Taking that over on first launch, before you have seen what it is, would be the wrong first impression — you turn it on when you are ready. |
+| **Auto hide/show on input** | Off | The console desktop stays where you put it until you ask for this. |
+| **Launch on Windows startup** | Off | |
+| **Minimise to the system tray** | On | Closing the window leaves the controller engine running; that is the point of the program. |
+| **Start minimised** | Off | Only applies to the automatic startup anyway. |
+| **Virtual controller output** | Off | It needs a driver installed separately. Off until you install it and choose it. |
+| **Diagnostic logging** | **On** | So a problem you hit in this prerelease can actually be explained. Logs stay on your machine and are deleted after 7 days — Preferences → System turns it off. |
+| **Built-in file browser** | On | |
+| **Show hidden items** | Off | |
+| **Profiles** | Desktop, Virtual Keyboard | The two built-in ones. Desktop is what applies when no application-specific profile matches; neither can be deleted. |
+
+---
+
+## Is this safe to run?
+
+It asks for administrator rights, it hides your taskbar while it runs, and it is closed source. Those
+are fair reasons to want more than a reassurance.
+
+- **Administrator:** required, because Windows discards simulated input sent into the windows of
+  programs that are themselves running as administrator — without it your controller would stop
+  working in some applications, with no error to explain why.
+- **Network:** one address, `api.github.com` — once at startup, and again if you press the update
+  button. Nothing about you is sent. No telemetry, no automatic downloads.
+- **Your data:** `Documents\PersonalConsole`, in plain files you can open. Saved passwords are
+  encrypted to your Windows account and cannot be read on another machine.
+
+**[SECURITY.md](SECURITY.md) explains each of these with a way to verify it yourself** — including
+the parts that count against the program, and the things this kind of page cannot prove at all.
+
 ---
 
 ## Updates
 
 **Preferences → Update → Check for updates** compares the running build against the latest release here
-and opens this page when a newer one exists. The check runs only when that button is pressed.
+and opens this page when a newer one exists.
+
+Since v0.2.0 the same check also runs **once when the application starts**. If a newer release is out,
+a small dot appears on the *Preferences* entry and on the *Update* tab — so you find out without going
+looking. It downloads and installs nothing; opening the page is still your decision. If there is no
+internet the check gives up quietly and nothing is shown.
 
 ---
 
 ## Known limitations
-- **One controller drives the interface.** Additional pads can run their own profiles, but menu
-  navigation belongs to the first one.
+
+- **No force feedback on DInput pads.** For this class of controller Windows reports no haptics and no
+  force-feedback motors on the raw path; every writable output report the device declares was tried and
+  none moved a motor. A pad running in XInput mode rumbles normally.
+- **Extra paddles (L4/R4) cannot be bound.** Controllers with rear paddles copy them onto an existing
+  button in their own firmware, so nothing distinguishable ever reaches the driver. Map the paddle to a
+  spare button in your controller's own software, then bind that button here.
+- **Force-closing the application while the Console Desktop is open leaves the desktop broken.**
+  Ending the process from Task Manager skips the step that gives Windows its shell back, so the
+  desktop icons stay hidden and the taskbar stays unclickable. To recover: start PersonalConsole
+  again and then close it normally. This is not fully solved yet. Closing the application normally
+  is unaffected.
+- **The Console Desktop's shortcut layout stays on the machine it was arranged on.** Profiles, themes
+  and radial menus travel with your Documents folder; which programs sit on which tab does not,
+  because that list is built from what is installed on the machine you are using.
+
+_The full list for the current release, including what was fixed, is in the release notes on the
+release page._
 
 ---
 
@@ -106,4 +230,14 @@ PersonalConsole is proprietary software, free for personal use. It may not be so
 redistributed, modified or reverse engineered. It is provided with no warranty of any kind.
 
 See [LICENSE.txt](LICENSE.txt) for the full terms, which also describe what the application does to
-your system — it runs elevated and replaces the Windows shell while its console desktop is enabled.
+your system — it runs as administrator and replaces the Windows shell while its console desktop is
+enabled.
+
+---
+
+## A note on SmartScreen
+
+The downloads are not signed with a code-signing certificate, so Windows SmartScreen will warn that
+the publisher is unknown the first time you run the installer. Choose **More info → Run anyway** if
+you are happy to proceed. A signing certificate is a recurring cost and has not been bought for this
+project.

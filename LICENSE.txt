@@ -41,9 +41,9 @@ rights to the source code are granted.
 You should understand the following before installing. These are intended
 behaviours, not defects:
 
-  a) ADMINISTRATOR PRIVILEGES. The Software requests elevation and runs with
-     administrator rights. It requires this in order to send simulated keyboard and
-     mouse input to other applications, which Windows otherwise discards.
+  a) ADMINISTRATOR PRIVILEGES. The Software asks for your permission at every launch
+     and runs with administrator rights. It requires this in order to send simulated
+     keyboard and mouse input to other applications, which Windows otherwise discards.
 
   b) SHELL REPLACEMENT. While its console desktop is enabled, the Software hides the
      Windows desktop icons and the taskbar and presents its own interface in their
@@ -139,4 +139,5 @@ remain in full force. Failure to enforce any provision is not a waiver of it. Th
 agreement is the entire agreement between you and the author concerning the Software.
 
 
-Contact: https://pcpersonalconsole.vercel.app
+Contact: personalconsolesoftware@gmail.com
+Support the project: https://www.patreon.com/cw/personalconsoledev
