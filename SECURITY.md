@@ -164,6 +164,21 @@ the application sends nothing.
 | Desktop layout, tabs, pinned items | `Documents\PersonalConsole\<COMPUTER-NAME>\` | Per machine, because it describes shortcuts that exist on *this* machine. |
 | Diagnostic logs | `Documents\PersonalConsole\Logs\` | Deleted automatically after 7 days. |
 | Saved sign-ins | `%LOCALAPPDATA%\PersonalConsole\credentials.dat` | Encrypted, and deliberately **not** in Documents. |
+| Settings you choose to share with other Windows accounts | `%ProgramData%\PersonalConsole\` | **Empty unless you turn sharing on.** See below. |
+
+**Sharing with other accounts is off until you turn it on.** Preferences → System → *Share Settings
+With Other Accounts* copies the categories you tick — profiles, appearance, radial menus, keyboard —
+into `%ProgramData%\PersonalConsole\`, which is the one folder on this computer every account can
+read. Three things about it are worth stating plainly, because they are the difference between a
+convenience and a surprise:
+
+- **Nothing goes there until you ask.** With the switch off, that folder is never created and the
+  application behaves exactly as it did before this feature existed.
+- **Anyone who signs in to this computer can read what you put there.** That is the entire point of
+  the folder, and it is why saved sign-ins can never be shared — `credentials.dat` stays in your own
+  account and is not one of the categories.
+- **Turning it back off returns to your own copy**, which was left in place rather than moved.
+  Nothing is deleted in either direction.
 
 **How you check it.** Open those folders. Everything except the credentials file is human-readable —
 open the XML in Notepad and read your own settings. That table is the whole list. The one thing that
