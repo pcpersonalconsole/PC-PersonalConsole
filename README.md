@@ -10,6 +10,7 @@ a system panel — all navigable without ever reaching for a mouse.
 
 ---
 
+
 ## What it does
 
 - **Console desktop** — full-screen tile launcher with tabs, custom ordering, hidden items, a clock and
@@ -197,7 +198,17 @@ internet the check gives up quietly and nothing is shown.
   is unaffected.
 - **The Console Desktop's shortcut layout stays on the machine it was arranged on.** Profiles, themes
   and radial menus travel with your Documents folder; which programs sit on which tab does not,
-  because that list is built from what is installed on the machine you are using.
+  because that list is built from what is installed on the machine you are using. The same applies to
+  the folders you pin in File Explorer — as of 0.2.1 those are per machine too, since they point at
+  paths that may not exist on another one. Existing pins are kept when you upgrade. The same boundary
+  applies to *Share Settings With Other Accounts*: it can share your profiles, appearance, radial
+  menus and keyboard with other accounts on this computer, but never the desktop layout or the pins.
+- **In DirectInput mode a game can still read the controller while you type**, unless *Exclusive
+  Controller Access* is on. When it is off a game sees two controllers — your own and the
+  stand-in this application presents — and which one it uses is the game's decision, not a setting.
+  Measured across three games: two ignored the physical controller and stayed quiet while the
+  Realtime keyboard was open, one did not and kept moving the character. If a game keeps reacting
+  while you type, turn hiding on; that leaves it a single controller to find.
 
 _The full list for the current release, including what was fixed, is in the release notes on the
 release page._
@@ -226,9 +237,25 @@ enabled.
 
 ---
 
-## A note on SmartScreen
+## What Windows asks you during installation
 
-The downloads are not signed with a code-signing certificate, so Windows SmartScreen will warn that
-the publisher is unknown the first time you run the installer. Choose **More info → Run anyway** if
-you are happy to proceed. A signing certificate is a recurring cost and has not been bought for this
-project.
+Installing this takes more clicking than most programs, and none of the prompts means something is
+wrong with the download. Here is every one of them, in the order you meet it, and why it appears.
+
+| What you see | Why |
+|---|---|
+| Your browser says the file is not commonly downloaded | The file has no code-signing certificate, so the browser has no publisher to recognise. |
+| **Windows protected your PC** (SmartScreen) | Same reason. Choose **More info → Run anyway**. |
+| **User Account Control**, showing *Unknown publisher* | The application needs administrator rights, and without a certificate Windows has no name to show. Why it needs them is under *Is this safe to run?* above. |
+| A second permission prompt when you install **ViGEmBus** | Optional driver, installed from its own project, and it is signed — you will see its publisher name. Only needed for typing in games without pausing them. |
+| A third one when you install **HidHide** | Optional driver, same arrangement. Only needed to hide your controller from games. |
+
+The first three exist because the downloads are **not signed with a code-signing certificate**: a
+certificate is a recurring cost that has not been bought for this project. The two drivers are
+separate programs by another author, so they ask for permission on their own behalf; the application
+never installs them behind your back — it opens their download page and you decide.
+
+**What you can check instead of trusting the prompts.** Every release publishes `SHA256SUMS.txt`
+beside the downloads, so you can confirm the file you have is the file that was published:
+`Get-FileHash <file>` in PowerShell and compare. **SECURITY.md** describes what the application does
+to your machine and how to verify each claim yourself.
