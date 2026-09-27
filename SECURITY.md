@@ -161,7 +161,7 @@ the application sends nothing.
 | What | Where | Notes |
 |---|---|---|
 | Profiles, mappings, themes, radial menus, keyboard dictionaries | `Documents\PersonalConsole\Shared\` | Plain XML and text. Copy the folder to another PC and it works there. |
-| Desktop layout, tabs, pinned items | `Documents\PersonalConsole\<COMPUTER-NAME>\` | Per machine, because it describes shortcuts that exist on *this* machine. |
+| Desktop layout, tabs, pinned items, remembered program locations | `Documents\PersonalConsole\<COMPUTER-NAME>\` | Per machine, because it describes shortcuts and paths that exist on *this* machine. The remembered locations are only used to draw a profile's icon. |
 | Diagnostic logs | `Documents\PersonalConsole\Logs\` | Deleted automatically after 7 days. |
 | Saved sign-ins | `%LOCALAPPDATA%\PersonalConsole\credentials.dat` | Encrypted, and deliberately **not** in Documents. |
 | Settings you choose to share with other Windows accounts | `%ProgramData%\PersonalConsole\` | **Empty unless you turn sharing on.** See below. |
@@ -222,11 +222,65 @@ delete the task in Task Scheduler afterwards.
 
 ---
 
+## The system helper service
+
+**Setup installs a second program and registers it as a Windows service: `PersonalConsoleSys`,
+shown as *PersonalConsole SYSTEM Helper*.** This is the one part of the installation that runs
+outside your own account, so it gets its own section.
+
+**What it is for.** A few tray icons are drawn by programs Windows runs as the system account —
+Apollo and the NVIDIA settings icon are the common ones. Windows does not let an ordinary program,
+even one running as administrator, open those icons' menus. The helper is allowed to, because it
+runs at the same level they do, and it exists only to read such a menu and carry out the entry you
+choose.
+
+**When it runs.** Never on its own. It is registered **demand start**, which means Windows does not
+run it at boot or at login; the application starts it the first time you hold **A** on one of those
+icons, and it stops again with the machine. If you never touch such an icon it never runs.
+
+**What talks to it.** One named pipe that only the system account, Administrators and the user
+signed in at the keyboard may open — and it additionally refuses a caller that is not running
+elevated. It carries two requests: *read this icon's menu* and *choose this entry of it*.
+
+**How you check it.** Open **Services** (`services.msc`) and look for *PersonalConsole SYSTEM
+Helper*: its startup type reads **Manual** and its status is blank until you use the feature. On a
+command line, `sc qc PersonalConsoleSys` prints the same thing, including the program it runs
+(`PersonalConsoleSys.exe --service`, in the installation folder) and the account (`LocalSystem`).
+
+**Removing it.** Uninstalling PersonalConsole stops and removes the service — that is part of the
+package, not something you have to do by hand. You can check afterwards with `sc query
+PersonalConsoleSys`, which should report that the service does not exist. If you would rather keep
+the application without this ability, set *Enable System Tray Menus* to off in the Console Mode
+settings; the service is then never started.
+
+**The honest limit.** A service running as the system account is the most powerful thing this
+installation puts on your machine. Its own code only reads and clicks tray menus, and this page
+cannot prove that to you by itself — see *What this page cannot prove* at the end.
+
+---
+
 ## Installing and removing
 
 **Installing** copies the program into `Program Files` and adds Start-menu shortcuts. The program
 never writes into its own installation folder afterwards — your settings go to Documents, which is
 why a reinstall or an upgrade cannot wipe them.
+
+**Two drivers come with it.** Setup installs **ViGEmBus** and **HidHide**, the drivers this
+application needs to present a controller of its own and to hide your physical one from a game while
+you type. Both are the drivers' own signed packages by Nefarius Software Solutions, included
+unchanged, and both are kernel-mode: that is what a virtual controller requires. Earlier versions sent
+you to their download pages instead; nothing else about what they do has changed.
+
+**They are not removed when you uninstall PersonalConsole.** Other controller software on the machine
+may be using them, so taking them away would break it. **Apps & Features** lists ViGEmBus and HidHide
+separately and either can be removed there. Their licences ship with the application as
+`THIRD-PARTY-NOTICES.txt`.
+
+**How you check it.** Before installing, the two packages are inside the installer; after installing,
+**Apps & Features** shows three entries — PersonalConsole, ViGEmBus Driver and HidHide — each with its
+own publisher, and Windows shows Nefarius Software Solutions as the signer of the two drivers. The
+build that produced this release verifies both downloads against a published hash and refuses to
+package if either signature does not match.
 
 **Removing it** uninstalls the program and leaves your settings folder alone, on purpose: uninstalling
 to fix a problem should not also destroy your mappings. If you want them gone, delete
