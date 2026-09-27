@@ -10,15 +10,6 @@ a system panel — all navigable without ever reaching for a mouse.
 
 ---
 
-## Screenshots
-
-<!-- Add images here. Suggested: console desktop, radial menu, virtual keyboard, mapping page. -->
-| Console desktop | Radial menu |
-|---|---|
-| _screenshot_ | _screenshot_ |
-
----
-
 ## What it does
 
 - **Console desktop** — full-screen tile launcher with tabs, custom ordering, hidden items, a clock and
