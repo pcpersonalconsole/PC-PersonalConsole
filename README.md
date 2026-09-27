@@ -10,6 +10,14 @@ a system panel — all navigable without ever reaching for a mouse.
 
 ---
 
+## Screenshots
+
+<!-- Add images here. Suggested: console desktop, radial menu, virtual keyboard, mapping page. -->
+| Console desktop | Radial menu |
+|---|---|
+| _screenshot_ | _screenshot_ |
+
+---
 
 ## What it does
 
@@ -150,6 +158,11 @@ Nothing here is hidden, so you can decide what to change before you change anyth
 | **Built-in file browser** | On | |
 | **Show hidden items** | Off | |
 | **Profiles** | Desktop, Virtual Keyboard | The two built-in ones. Desktop is what applies when no application-specific profile matches; neither can be deleted. |
+| **Templates** | Desktop, Virtual Keyboard | Ready-made copies of the two profiles above, so **Profiles & Templates → Templates** is not empty on a new machine. They are only placed when you have no templates of your own, so an update never overwrites yours. |
+
+More templates are shared at **<https://www.pcpersonalconsole.com/communityfiles>**. Download a `.json`
+and load it with **Import Template**; **Export Template** writes one out to share. Four toggles choose
+what a template carries, so you can move only the parts you want.
 
 ---
 
@@ -203,6 +216,12 @@ internet the check gives up quietly and nothing is shown.
   paths that may not exist on another one. Existing pins are kept when you upgrade. The same boundary
   applies to *Share Settings With Other Accounts*: it can share your profiles, appearance, radial
   menus and keyboard with other accounts on this computer, but never the desktop layout or the pins.
+- **Tray menus of system-account programs go through a helper service.** Icons drawn by a program
+  that Windows runs as the system account — Apollo and the NVIDIA settings icon are the two common
+  ones — sit above what any ordinary application may touch, so setup installs a small helper service
+  that is allowed to read them. It starts only when you hold **A** on such an icon and is removed
+  when you uninstall. Where it cannot start — a policy or security tool blocking it — holding **A**
+  says the menu cannot be opened, which is how it behaved everywhere before.
 - **In DirectInput mode a game can still read the controller while you type**, unless *Exclusive
   Controller Access* is on. When it is off a game sees two controllers — your own and the
   stand-in this application presents — and which one it uses is the game's decision, not a setting.
