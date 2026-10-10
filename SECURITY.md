@@ -79,9 +79,15 @@ back. For the registry key: `regedit` →
 `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` → the `Shell` value should
 still read `explorer.exe`, before and after.
 
-**The honest limit.** If the application is killed while the Console Desktop is open — Task Manager's
-*End task*, a power cut, a crash — the taskbar stays hidden until you **start the application again**,
-which repairs it. If you would rather fix it by hand: press `Ctrl+Shift+Esc`, *Run new task*, type
+**If the application is killed.** While the Console Desktop is open, a second copy of the same
+`PersonalConsole.exe` runs with no window. It waits for the application to exit and, if the
+application did not hand the shell back (Task Manager's *End task*, a crash), shows and re-enables
+the taskbar and desktop icons, then exits. **How you check it:** with the Console Desktop open, Task
+Manager → *Details* shows two `PersonalConsole.exe` entries; end the older one, and the taskbar comes
+back within a moment while the second entry disappears.
+
+**The honest limit.** If that helper is ended too, the taskbar stays hidden until you **start the
+application again**, which repairs it (restarting Windows does as well). If you would rather fix it by hand: press `Ctrl+Shift+Esc`, *Run new task*, type
 `explorer.exe`, tick *Create this task with administrative privileges*.
 
 ---
